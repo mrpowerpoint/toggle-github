@@ -1,0 +1,22 @@
+#!/bin/bash
+declare -A options
+
+## PUT your github options here
+## options["username"]="email"
+options["username1"]="email1@protonmail.com"
+options["username2"]="email2@protonmail.com"
+
+select filename in "${!options[@]}";
+do
+
+	echo "You selected $filename ($REPLY)"
+    echo "Setting user.name to ${filename}"
+    git config --global --unset-all user.name
+    git config --global credential.username  "${filename}"
+    git config --global user.name "${filename}"
+
+    echo "Setting user.email to ${options[${filename}]}"
+    git config --global --unset-all user.email
+    git config --global user.email "${options[${filename}]}"
+	break;
+done
